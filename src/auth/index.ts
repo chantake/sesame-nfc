@@ -5,6 +5,11 @@ export class AuthService {
 
     constructor(private fileName = "ids.txt", private newLine = "\n") {
         try {
+            // ファイルがなければ作成
+            if (!fs.existsSync(this.fileName)) {
+                fs.writeFileSync('test.txt', '')
+            }
+            // ファイルから読み込み
             const text = fs.readFileSync(fileName, "utf-8");
             this.ids = text.split(newLine);
         } catch(e) {
