@@ -33,6 +33,7 @@ export class MainService {
             // 通常認証
             return this.onAuth(id, maskId)
         })
+        console.log("NFCの監視を開始しました！")
         this.slack?.postMessage("<!channel> NFCの監視を開始しました！")
     }
 
