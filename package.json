@@ -1,7 +1,9 @@
 {
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "yarn clean && tsc && yarn copy-files",
+    "clean": "rm -rf ./dist",
+    "copy-files": "cp ./src/nfc/pasori.py ./dist/src/nfc/pasori.py",
     "start": "node dist/src --experimental-modules",
     "dev": "yarn build && yarn start"
   },
