@@ -1,0 +1,16 @@
+{
+  "sesame": {
+    "apiKey": "",
+    "devices": [
+      {
+        "uuid": "",
+        "secret": ""
+      }
+    ]
+  },
+  "slack": {
+    "token": "",
+    "channel": ""
+  },
+  "led": false
+}
