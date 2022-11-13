@@ -5,6 +5,9 @@
     "start": "node dist/src --experimental-modules",
     "dev": "yarn build && yarn start"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "@slack/web-api": "5.15.0",
     "axios": "0.21",
