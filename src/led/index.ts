@@ -28,7 +28,9 @@ export class LedService {
     public init(): void {
         this.startInterval()
         // 終了処理を登録
-        this.exit()
+        process.on("exit", () => {
+            this.exit()
+        })
     }
 
     public exit(): void {

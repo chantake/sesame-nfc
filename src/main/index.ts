@@ -17,12 +17,11 @@ export class MainService {
     private addMode = false
 
     public start(): void {
-        this.nfc.onTouch(async (id) => {
+        this.nfc.onTouch( (id) => {
             const maskId = this.auth.maskId(id)
             // 管理用IDの場合
             if (this.auth.isMasterId(id)) {
-                this.setAddMode(true)
-                return
+                return this.setAddMode(!this.addMode)
             }
 
             // 登録モード or 未登録
@@ -33,13 +32,16 @@ export class MainService {
             // 通常認証
             return this.onAuth(id, maskId)
         })
+        // led点灯
+        this.led?.init()
+
         console.log("NFCの監視を開始しました！")
         this.slack?.postMessage("<!channel> NFCの監視を開始しました！")
     }
 
-    private setAddMode(value: boolean): void {
-        this.addMode = value;
-        console.log(`setAddMode: ${value}`);
+    private async setAddMode(value: boolean): Promise<void> {
+        this.addMode = value
+        console.log(`setAddMode: ${value}`)
         if(value) {
             this.led?.blink(0.25, 0.5);
         } else {
@@ -48,7 +50,7 @@ export class MainService {
         }
     }
 
-    private async onAddMode(id: string, maskId: string): Promise<void> {
+    private onAddMode(id: string, maskId: string): Promise<void> {
         if(this.auth.isValidId(id)) {
             //登録済みなので削除する
             this.auth.removeId(id)
@@ -60,7 +62,7 @@ export class MainService {
             console.log(`Completion of registration id:${maskId}`)
             this.slack?.postMessage(`<!channel> 新しい鍵を登録しました id:${maskId}`)
         }
-        this.setAddMode(false)
+        return this.setAddMode(false)
     }
 
     private async onAuth(id: string, maskId: string): Promise<void> {

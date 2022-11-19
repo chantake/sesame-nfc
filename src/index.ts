@@ -34,9 +34,6 @@ const main = async (): Promise<void> => {
     const mainService = new MainService(nfcService, authService, sesameService, slackService, ledService)
     mainService.start()
 
-    process.on("exit", () => {
-        ledService?.exit()
-    })
     process.on("SIGINT", () => {
         process.exit(0)
     })
